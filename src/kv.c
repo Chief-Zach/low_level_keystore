@@ -18,6 +18,21 @@ size_t hash(const char *value, size_t capacity) {
     return hash % capacity;
 
 }
+char *kv_get(kv_t *db, const char *key) {
+    if (!db || !key) {
+        return NULL;
+    }
+
+    size_t idx = hash(key, db->capacity);
+
+    for (int i=idx; i<db->capacity; i++) {
+        if (!strcmp(db->entries[i].key, key)) {
+            return db->entries[i].value;
+        }
+    }
+
+    return NULL;
+}
 
 int kv_put(kv_t *db, const char *key, const char *value) {
     if (!db || !key || !value) {
