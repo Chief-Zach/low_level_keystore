@@ -1,5 +1,6 @@
 #include <kv.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 kv_t *kv_init(size_t capacity) {
     if (capacity == 0) {
@@ -21,4 +22,8 @@ kv_t *kv_init(size_t capacity) {
     }
 
     return table;
+}
+
+void kv_free(kv_t *db) {
+    free(db);
 }
