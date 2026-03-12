@@ -26,8 +26,10 @@ char *kv_get(kv_t *db, const char *key) {
     size_t idx = hash(key, db->capacity);
 
     for (int i=idx; i<db->capacity; i++) {
-        if (!strcmp(db->entries[i].key, key)) {
-            return db->entries[i].value;
+        kv_entry_t *entry = &db->entries[i];
+        if (!entry || !entry->key) return NULL;
+        if (!strcmp(entry->key, key)) {
+            return entry->value;
         }
     }
 

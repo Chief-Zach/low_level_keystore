@@ -18,7 +18,7 @@ int main() {
 
     printf("IDX: %d\n", return_val);
 
-    char *key = "first";
+    char *key = "last";
     char *lookup_value = kv_get(table, key);
     
     if (lookup_value == NULL) {
