@@ -1,4 +1,3 @@
-#include <_string.h>
 #include <kv.h>
 #include <stdlib.h>
 #include <stdio.h>
