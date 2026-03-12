@@ -4,7 +4,7 @@
 #include <string.h>
 
 
-size_t hash(char *value, size_t capacity) {
+size_t hash(const char *value, size_t capacity) {
     size_t hash = 0x13371337deadbeef;
 
     while (*value) {
@@ -19,7 +19,7 @@ size_t hash(char *value, size_t capacity) {
 
 }
 
-int kv_put(kv_t *db, char *key, char *value) {
+int kv_put(kv_t *db, const char *key, const char *value) {
     if (!db || !key || !value) {
         return -1;
     }
