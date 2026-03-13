@@ -59,8 +59,10 @@ char *kv_get(kv_t *db, const char *key) {
         size_t real_idx = (idx + i) % db->capacity;
         
         kv_entry_t *entry = &db->entries[real_idx];
-        
-        if (!entry || !entry->key) return NULL;
+
+        if (!entry->key) return NULL;
+        if (entry->key == TOMBSTONE) continue;
+
         if (entry->key && entry->key != TOMBSTONE && !strcmp(entry->key, key)) {
             return entry->value;
         }
@@ -81,7 +83,7 @@ int kv_put(kv_t *db, const char *key, const char *value) {
 
         kv_entry_t *entry = &db->entries[real_idx];
 
-        if (entry->key && entry->key != TOMBSTONE && strcmp(entry->key, key)) {
+        if (entry->key && entry->key != TOMBSTONE && !strcmp(entry->key, key)) {
             char *newval = strdup(value);
             if (newval == NULL) {
                 return -1;
@@ -91,7 +93,7 @@ int kv_put(kv_t *db, const char *key, const char *value) {
             return real_idx;
         }
 
-        if (!entry->key || entry->key == TOMBSTONE) {
+        else if (!entry->key || entry->key == TOMBSTONE) {
             char *newval = strdup(value);
             char *newkey = strdup(key);
 
